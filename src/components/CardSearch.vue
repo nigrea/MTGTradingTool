@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { searchCards } from '@/services/scryfall'
+import CardThumb from './CardThumb.vue'
+import { cardImage, cardLargeImage, searchCards } from '@/services/scryfall'
 import { debounce } from '@/utils/debounce'
 import type { ScryfallCard } from '@/types'
 
@@ -48,9 +49,16 @@ onBeforeUnmount(() => {
   controller?.abort()
 })
 
+function select(c: ScryfallCard) {
+  emit('add', c)
+  query.value = ''
+  results.value = []
+  searched.value = false
+}
+
 function price(c: ScryfallCard) {
-  const p = c.prices.usd ?? c.prices.usd_foil ?? c.prices.usd_etched
-  return p ? `$${p}` : 'N/A'
+  const p = c.prices.eur ?? c.prices.eur_foil ?? c.prices.eur_etched
+  return p ? `€${p}` : 'N/A'
 }
 </script>
 
@@ -61,10 +69,23 @@ function price(c: ScryfallCard) {
     <p v-else-if="error" class="hint error">{{ error }}</p>
     <p v-else-if="searched && !results.length" class="hint">No cards found.</p>
     <ul v-if="results.length" class="results">
-      <li v-for="c in results" :key="c.id">
+      <li
+        v-for="c in results"
+        :key="c.id"
+        tabindex="0"
+        @click="select(c)"
+        @keydown.enter.self="select(c)"
+      >
+        <CardThumb
+          v-if="cardImage(c)"
+          :src="cardImage(c)!"
+          :large-src="cardLargeImage(c)"
+          :alt="c.name"
+        />
+        <span v-else class="thumb-placeholder" />
         <span class="name">{{ c.name }} <small>({{ c.set_name }})</small></span>
         <span class="price">{{ price(c) }}</span>
-        <button type="button" @click="emit('add', c)">Add</button>
+        <button type="button">Add</button>
       </li>
     </ul>
   </div>

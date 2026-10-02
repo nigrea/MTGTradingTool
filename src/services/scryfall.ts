@@ -14,7 +14,7 @@ export async function searchCards(query: string, signal?: AbortSignal): Promise<
 }
 
 export function cardPrice(card: ScryfallCard): number | null {
-  const raw = card.prices.usd ?? card.prices.usd_foil ?? card.prices.usd_etched
+  const raw = card.prices.eur ?? card.prices.eur_foil ?? card.prices.eur_etched
   if (raw == null) return null
   const n = parseFloat(raw)
   return Number.isNaN(n) ? null : n
@@ -30,6 +30,11 @@ export function toTradeCard(card: ScryfallCard): Omit<TradeCard, 'uid' | 'quanti
     name: card.name,
     setName: card.set_name,
     image: cardImage(card),
+    largeImage: cardLargeImage(card),
     price: cardPrice(card),
   }
+}
+
+export function cardLargeImage(card: ScryfallCard): string | null {
+  return card.image_uris?.normal ?? card.card_faces?.[0]?.image_uris?.normal ?? null
 }

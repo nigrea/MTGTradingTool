@@ -1,7 +1,7 @@
 export interface ScryfallPrices {
-  usd: string | null
-  usd_foil: string | null
-  usd_etched: string | null
+  eur: string | null
+  eur_foil: string | null
+  eur_etched: string | null
 }
 
 export interface ScryfallCard {
@@ -10,8 +10,8 @@ export interface ScryfallCard {
   set: string
   set_name: string
   prices: ScryfallPrices
-  image_uris?: { small: string }
-  card_faces?: { image_uris?: { small: string } }[]
+  image_uris?: { small: string; normal: string }
+  card_faces?: { image_uris?: { small: string; normal: string } }[]
 }
 
 export interface TradeCard {
@@ -20,6 +20,7 @@ export interface TradeCard {
   name: string
   setName: string
   image: string | null
+  largeImage?: string | null
   price: number | null
   quantity: number
 }
