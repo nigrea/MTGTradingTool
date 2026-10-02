@@ -26,7 +26,7 @@ describe('trade utils', () => {
   })
 
   it('falls back to foil price', () => {
-    const card = { prices: { usd: null, usd_foil: '2.50', usd_etched: null } } as ScryfallCard
+    const card = { prices: { eur: null, eur_foil: '2.50', eur_etched: null } } as ScryfallCard
     expect(cardPrice(card)).toBe(2.5)
   })
 

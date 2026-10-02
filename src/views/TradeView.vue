@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import TradeColumn from '@/components/TradeColumn.vue'
-import { formatUsd, loadTrades, saveTrades, sideTotal } from '@/utils/trade'
+import { formatEur, loadTrades, saveTrades, sideTotal } from '@/utils/trade'
 import type { Trade } from '@/types'
 
 const route = useRoute()
@@ -26,7 +26,7 @@ const summary = computed(() => {
   if (!trade.value) return ''
   if (Math.abs(diff.value) < 0.005) return 'The trade is even.'
   const [more, less] = diff.value > 0 ? [trade.value.a, trade.value.b] : [trade.value.b, trade.value.a]
-  return `${more.name} is giving ${formatUsd(Math.abs(diff.value))} more than ${less.name}.`
+  return `${more.name} is giving ${formatEur(Math.abs(diff.value))} more than ${less.name}.`
 })
 </script>
 

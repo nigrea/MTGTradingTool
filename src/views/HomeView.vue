@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { formatUsd, loadTrades, newTrade, saveTrades, sideTotal } from '@/utils/trade'
+import { formatEur, loadTrades, newTrade, saveTrades, sideTotal } from '@/utils/trade'
 
 const router = useRouter()
 const trades = ref(loadTrades().sort((x, y) => y.createdAt - x.createdAt))
@@ -28,7 +28,7 @@ function remove(id: string) {
       <li v-for="t in trades" :key="t.id">
         <RouterLink :to="{ name: 'trade', params: { id: t.id } }">
           {{ new Date(t.createdAt).toLocaleString() }} — {{ t.a.name }}
-          {{ formatUsd(sideTotal(t.a)) }} vs {{ t.b.name }} {{ formatUsd(sideTotal(t.b)) }}
+          {{ formatEur(sideTotal(t.a)) }} vs {{ t.b.name }} {{ formatEur(sideTotal(t.b)) }}
         </RouterLink>
         <button type="button" aria-label="Delete trade" @click="remove(t.id)">Delete</button>
       </li>

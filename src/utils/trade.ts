@@ -6,8 +6,8 @@ export function sideTotal(side: TradeSide): number {
   return side.cards.reduce((sum, c) => sum + (c.price ?? 0) * c.quantity, 0)
 }
 
-export function formatUsd(n: number): string {
-  return `$${n.toFixed(2)}`
+export function formatEur(n: number): string {
+  return `€${n.toFixed(2)}`
 }
 
 export function newTrade(): Trade {

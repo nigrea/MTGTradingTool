@@ -13,7 +13,7 @@ describe('TradeColumn', () => {
       ],
     }
     const w = mount(TradeColumn, { props: { modelValue: side } })
-    expect(w.text()).toContain('$2.50 each')
-    expect(w.get('[data-test="total"]').text()).toBe('$6.00')
+    expect(w.text()).toContain('€2.50 each')
+    expect(w.get('[data-test="total"]').text()).toBe('€6.00')
   })
 })
